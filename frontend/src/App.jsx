@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
-import Dashboard from "./pages/Dashboard.jsx";
 import Login from "./pages/Login.jsx";
 import ProductCreate from "./pages/ProductCreate.jsx";
 import ProductEdit from "./pages/ProductEdit.jsx";
@@ -17,14 +16,6 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
           <Route
             path="/products"
             element={
@@ -57,7 +48,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/products" replace />} />
         </Routes>
       </div>
     </div>

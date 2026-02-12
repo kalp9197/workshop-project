@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
+/**
+ * User schema
+ *
+ * Stores minimal credentials (email + hashed password) for authenticating
+ * into the ScaleMetrics demo. Additional profile fields can be added later
+ * without changing how auth works.
+ */
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -28,6 +35,12 @@ userSchema.pre("save", async function hashPassword(next) {
   next();
 });
 
+/**
+ * Compare a candidate password with the stored password hash.
+ *
+ * @param {string} candidatePassword - Plain text password from the login form.
+ * @returns {Promise<boolean>} Resolves true when the password matches.
+ */
 userSchema.methods.comparePassword = async function comparePassword(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };

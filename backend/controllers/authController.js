@@ -1,12 +1,27 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
+/**
+ * Create a signed JWT for the given user id.
+ *
+ * The token payload is intentionally small so it fits cleanly in headers
+ * and is easy to inspect in workshop demos.
+ *
+ * @param {string} userId - MongoDB ObjectId of the user.
+ * @returns {string} A signed JWT string.
+ */
 const generateToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN || "1d",
   });
 };
 
+/**
+ * Register a new user.
+ *
+ * Validates the incoming email/password, ensures the email is unique,
+ * then creates a new User document and returns a JWT for immediate login.
+ */
 export const registerUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -32,6 +47,12 @@ export const registerUser = async (req, res) => {
   }
 };
 
+/**
+ * Authenticate an existing user and return a JWT.
+ *
+ * Verifies the email exists and that the provided password matches the
+ * stored hash using the User model's comparePassword helper.
+ */
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;

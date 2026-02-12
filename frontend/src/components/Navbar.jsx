@@ -13,16 +13,16 @@ function Navbar() {
   return (
     <nav className="border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between p-4 md:px-8">
-        <Link to="/dashboard" className="text-xl font-bold tracking-tight text-slate-900">
+        <Link
+          to={isAuthenticated ? "/products" : "/login"}
+          className="text-xl font-bold tracking-tight text-slate-900"
+        >
           ScaleMetrics
         </Link>
 
         <div className="flex items-center gap-3 text-sm">
           {isAuthenticated ? (
             <>
-              <Link className="rounded-md px-3 py-2 text-slate-700 hover:bg-slate-100" to="/dashboard">
-                Dashboard
-              </Link>
               <Link className="rounded-md px-3 py-2 text-slate-700 hover:bg-slate-100" to="/products">
                 Products
               </Link>

@@ -3,7 +3,7 @@
 ## Project Snapshot
 
 - Project name: **ScaleMetrics**
-- Type: Full-stack MERN app for large CSV ingestion + analytics dashboard
+- Type: Full-stack MERN app with auth + product CRUD
 - Backend path: `/Users/kalp/Downloads/live-project-workshop/backend`
 - Frontend path: `/Users/kalp/Downloads/live-project-workshop/frontend`
 
@@ -14,21 +14,16 @@
 - Entry point: `backend/server.js`
 - DB config: `backend/config/db.js`
 - Models:
-  - `backend/models/User.js` (email/password with bcrypt hash pre-save hook)
-  - `backend/models/Sale.js` (sales schema with indexes for analytics fields)
-  - `backend/models/Product.js` (product entity with nested `specifications`)
+ - `backend/models/User.js` (email/password with bcrypt hash pre-save hook)
+ - `backend/models/Product.js` (product entity with nested `specifications`)
 - Middleware:
-  - `backend/middleware/authMiddleware.js` (JWT protect middleware)
+ - `backend/middleware/authMiddleware.js` (JWT protect middleware)
 - Controllers:
-  - `backend/controllers/authController.js`
-  - `backend/controllers/dataController.js`
-  - `backend/controllers/productController.js`
-  - `backend/controllers/statsController.js`
+ - `backend/controllers/authController.js`
+ - `backend/controllers/productController.js`
 - Routes:
-  - `backend/routes/authRoutes.js`
-  - `backend/routes/dataRoutes.js`
-  - `backend/routes/productRoutes.js`
-  - `backend/routes/statsRoutes.js`
+ - `backend/routes/authRoutes.js`
+ - `backend/routes/productRoutes.js`
 
 ### Frontend
 
@@ -40,45 +35,27 @@
   - `frontend/src/components/Navbar.jsx`
   - `frontend/src/components/ProtectedRoute.jsx`
 - Pages:
-  - `frontend/src/pages/Login.jsx`
-  - `frontend/src/pages/Register.jsx`
-  - `frontend/src/pages/Dashboard.jsx` (CSV upload + customer records table preview; max 200 rows)
-  - `frontend/src/pages/Products.jsx` (table/list page with View, Edit, Delete actions + custom delete confirmation modal)
-  - `frontend/src/pages/ProductCreate.jsx` (`/product-create` page for create form)
-  - `frontend/src/pages/ProductEdit.jsx` (`/products/:id/edit` page for prefilled edit form)
-  - `frontend/src/pages/ProductView.jsx` (`/products/:id` page for styled product details with summary cards + specifications section)
-  - `frontend/src/pages/productFormUtils.js` (shared product form helpers)
+ - `frontend/src/pages/Login.jsx`
+ - `frontend/src/pages/Register.jsx`
+ - `frontend/src/pages/Products.jsx` (table/list page with View, Edit, Delete actions + custom delete confirmation modal)
+ - `frontend/src/pages/ProductCreate.jsx` (`/product-create` page for create form)
+ - `frontend/src/pages/ProductEdit.jsx` (`/products/:id/edit` page for prefilled edit form)
+ - `frontend/src/pages/ProductView.jsx` (`/products/:id` page for styled product details with summary cards + specifications section)
+ - `frontend/src/pages/productFormUtils.js` (shared product form helpers)
 
 ## Implemented API Endpoints
 
 - Health:
-  - `GET /api/health`
+ - `GET /api/health`
 - Auth:
-  - `POST /api/auth/register`
-  - `POST /api/auth/login`
-- Data:
-  - `POST /api/data/upload` (protected, file field: `file`)
-- Analytics:
-  - `GET /api/stats/summary` (protected)
-  - `GET /api/stats/revenue-by-region` (protected)
-  - `GET /api/stats/sales-by-item-type` (protected)
-  - `GET /api/stats/records?limit=200` (protected, hard-capped at 200)
+ - `POST /api/auth/register`
+ - `POST /api/auth/login`
 - Products (protected):
-  - `GET /api/products`
-  - `GET /api/products/:id`
-  - `POST /api/products`
-  - `PUT /api/products/:id`
-  - `DELETE /api/products/:id`
-
-## Data Ingestion Behavior
-
-- CSV upload uses `multer` for temporary disk upload.
-- Parsing uses `fs.createReadStream(...).pipe(csv())`.
-- Parser maps customer CSV headers (`Index`, `Customer Id`, `First Name`, `Last Name`, `Company`, `City`, `Country`, `Phone 1`, `Phone 2`, `Email`, `Subscription Date`, `Website`) into stored records.
-- Batch writes default to `20,000` rows (`CSV_BATCH_SIZE` configurable).
-- Batch inserts use MongoDB native collection `insertMany` with `ordered: false`.
-- Up to `3` chunk inserts run in parallel by default (`CSV_INSERT_CONCURRENCY` configurable).
-- Uploaded temp file is removed in `finally` cleanup.
+ - `GET /api/products`
+ - `GET /api/products/:id`
+ - `POST /api/products`
+ - `PUT /api/products/:id`
+ - `DELETE /api/products/:id`
 
 ## Run & Build Commands
 
@@ -108,8 +85,6 @@ Backend `.env` expected keys:
 - `MONGO_URI`
 - `JWT_SECRET`
 - `JWT_EXPIRES_IN`
-- `CSV_BATCH_SIZE` (optional, default `20000`)
-- `CSV_INSERT_CONCURRENCY` (optional, default `3`)
 
 Frontend optional `.env` key:
 
