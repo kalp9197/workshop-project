@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
+import dataRoutes from "./routes/dataRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
 /**
@@ -32,6 +33,7 @@ app.get("/api/health", (_req, res) => {
 // Auth and product APIs are grouped under the /api prefix.
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/data", dataRoutes);
 
 // Basic error handler so uncaught errors return JSON instead of HTML.
 app.use((error, _req, res, _next) => {

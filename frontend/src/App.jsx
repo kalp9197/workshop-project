@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import DataWorkshop from "./pages/DataWorkshop.jsx";
 import Login from "./pages/Login.jsx";
 import ProductCreate from "./pages/ProductCreate.jsx";
 import ProductEdit from "./pages/ProductEdit.jsx";
@@ -45,6 +46,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ProductEdit />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/data-workshop"
+            element={
+              <ProtectedRoute>
+                <DataWorkshop />
               </ProtectedRoute>
             }
           />

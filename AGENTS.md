@@ -3,9 +3,9 @@
 ## Project Snapshot
 
 - Project name: **ScaleMetrics**
-- Type: Full-stack MERN app with auth + product CRUD
-- Backend path: `/Users/kalp/Downloads/live-project-workshop/backend`
-- Frontend path: `/Users/kalp/Downloads/live-project-workshop/frontend`
+- Type: Full-stack MERN app with auth + product CRUD + Big Data CSV workflow
+- Backend path: `/Users/kalp/files/code/Work/workshop_svgu/live-project-workshop/backend`
+- Frontend path: `/Users/kalp/files/code/Work/workshop_svgu/live-project-workshop/frontend`
 
 ## Current Architecture
 
@@ -21,9 +21,12 @@
 - Controllers:
  - `backend/controllers/authController.js`
  - `backend/controllers/productController.js`
+ - `backend/controllers/dataController.js` (CSV import, aggregation migration)
 - Routes:
  - `backend/routes/authRoutes.js`
  - `backend/routes/productRoutes.js`
+ - `backend/routes/dataRoutes.js`
+ - Upload storage folder: `backend/uploads/`
 
 ### Frontend
 
@@ -41,6 +44,7 @@
  - `frontend/src/pages/ProductCreate.jsx` (`/product-create` page for create form)
  - `frontend/src/pages/ProductEdit.jsx` (`/products/:id/edit` page for prefilled edit form)
  - `frontend/src/pages/ProductView.jsx` (`/products/:id` page for styled product details with summary cards + specifications section)
+ - `frontend/src/pages/DataWorkshop.jsx` (`/data-workshop` route for Task 1 CSV + Task 2 migration flow)
  - `frontend/src/pages/productFormUtils.js` (shared product form helpers)
 
 ## Implemented API Endpoints
@@ -56,6 +60,10 @@
  - `POST /api/products`
  - `PUT /api/products/:id`
  - `DELETE /api/products/:id`
+- Data workshop (protected):
+ - `GET /api/data/collections`
+ - `POST /api/data/import-csv` (multipart, field `csvFile`)
+ - `POST /api/data/migrate-city`
 
 ## Run & Build Commands
 
